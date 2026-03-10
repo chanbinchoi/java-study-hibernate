@@ -1,6 +1,8 @@
 package com.telusko;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,8 +12,16 @@ public class Main {
         s1.setRollNo(101);
         s1.setsAge(30);
 
-        Session session = null;
+        Configuration cfg = new Configuration();
+        cfg.addAnnotatedClass(com.telusko.Student.class);
+        cfg.configure();
 
+        SessionFactory sf = cfg.buildSessionFactory();
+        Session session = sf.openSession();
+
+        session.save(s1);
+
+        commit();
 
         System.out.println(s1);
 
